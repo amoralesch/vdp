@@ -11,4 +11,9 @@
   </parent>
 
   <artifactId>vdp-web</artifactId>
+
+  <name>Web Application</name>
+  <description>
+    Very Dumb Project web module.
+  </description>
 </project>
