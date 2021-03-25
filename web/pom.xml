@@ -11,17 +11,20 @@
   </parent>
 
   <artifactId>vdp-web</artifactId>
-
   <name>Web Application</name>
   <description>
     Very Dumb Project web module.
   </description>
 
+  <properties>
+    <spring-boot.version>2.3.9.RELEASE</spring-boot.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <version>2.3.9.RELEASE</version>
+      <version>${spring-boot.version}</version>
     </dependency>
   </dependencies>
 
@@ -30,7 +33,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>2.3.9.RELEASE</version>
+        <version>${spring-boot.version}</version>
       </plugin>
     </plugins>
   </build>
