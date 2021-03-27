@@ -1,5 +1,5 @@
 FROM adoptopenjdk:11-jre-hotspot as builder
-ARG JAR_FILE=web/target/vdp-web-1.0.0-SNAPSHOT.jar
+ARG JAR_FILE=app/target/*.jar
 COPY ${JAR_FILE} application.jar
 RUN java -Djarmode=layertools -jar application.jar extract
 
