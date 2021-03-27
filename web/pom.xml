@@ -65,7 +65,6 @@
           <repository>huesodocker/vdp</repository>
           <tag>${project.version}</tag>
           <contextDirectory>../.</contextDirectory>
-          <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
         </configuration>
       </plugin>
     </plugins>
