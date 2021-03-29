@@ -16,10 +16,6 @@
     Very Dumb Project web module.
   </description>
 
-  <properties>
-    <spring-boot.version>2.3.9.RELEASE</spring-boot.version>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -27,46 +23,4 @@
       <version>${spring-boot.version}</version>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot.version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <layers>
-            <enabled>true</enabled>
-          </layers>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.spotify</groupId>
-        <artifactId>dockerfile-maven-plugin</artifactId>
-        <version>1.4.13</version>
-        <executions>
-          <execution>
-            <id>default</id>
-            <goals>
-              <goal>build</goal>
-              <goal>tag</goal>
-              <goal>push</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <repository>huesodocker/vdp</repository>
-          <tag>${project.version}</tag>
-          <contextDirectory>../.</contextDirectory>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>
