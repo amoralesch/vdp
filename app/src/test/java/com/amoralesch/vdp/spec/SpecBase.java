@@ -7,9 +7,7 @@ import org.concordion.api.AfterExample;
 import org.concordion.api.BeforeExample;
 import org.concordion.api.ExampleName;
 import org.concordion.api.FullOGNL;
-import org.concordion.api.extension.Extensions;
 import org.concordion.api.option.ConcordionOptions;
-import org.concordion.integration.junit4.ConcordionRunner;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@RunWith(ConcordionRunner.class)
+@RunWith(SpecRunner.class)
 @SpringBootTest(classes = SpecConfig.class, webEnvironment = RANDOM_PORT)
 @TestPropertySource("/test.properties")
 @ActiveProfiles("test")
