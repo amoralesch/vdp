@@ -20,10 +20,6 @@
     <node.directory>${project.build.directory}/node</node.directory>
     <chromium.directory>${project.build.directory}/chromium</chromium.directory>
     <uitools.version>1.0.0-SNAPSHOT</uitools.version>
-
-    <bin.classifier>linux</bin.classifier>
-    <bin.suffix />
-    <script.suffix />
   </properties>
 
   <build>
@@ -130,20 +126,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>windows</id>
-      <activation>
-        <os>
-          <family>windows</family>
-        </os>
-      </activation>
-      <properties>
-        <bin.classifier>windows</bin.classifier>
-        <bin.suffix>.exe</bin.suffix>
-        <script.suffix>.cmd</script.suffix>
-      </properties>
-    </profile>
-  </profiles>
 </project>
