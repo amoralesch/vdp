@@ -34,11 +34,13 @@
       <groupId>org.concordion</groupId>
       <artifactId>concordion</artifactId>
       <version>3.0.1</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>5.3.5</version>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
