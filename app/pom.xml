@@ -17,6 +17,11 @@
     tests.
   </description>
 
+  <properties>
+    <concordion.directory>${project.build.directory}/concordion</concordion.directory>
+    <chromium.directory>${project.parent.basedir}/ui/target/chromium</chromium.directory>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -24,9 +29,37 @@
       <version>${project.version}</version>
       <scope>runtime</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.concordion</groupId>
+      <artifactId>concordion</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>5.3.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <version>${spring-boot.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
+    <testResources>
+      <testResource>
+        <directory>src/test/doc</directory>
+        <filtering>true</filtering>
+      </testResource>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
@@ -44,6 +77,41 @@
                 <enabled>true</enabled>
               </layers>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.6</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent-integration</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <build.it.dir>${project.build.directory}</build.it.dir>
+            <webdriver.chrome.driver>${chromium.directory}/chromedriver${bin.suffix}</webdriver.chrome.driver>
+            <concordion.output.dir>${concordion.directory}</concordion.output.dir>
+          </systemPropertyVariables>
+          <includes>
+            <include>**/SpecFixture.java</include>
+          </includes>
+        </configuration>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
@@ -84,4 +152,29 @@
       </plugin>
     </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>com.github.bassman5</groupId>
+        <artifactId>maven-concordion-reporting-plugin</artifactId>
+        <version>1.0.2</version>
+        <configuration>
+          <concordionDir>${concordion.directory}</concordionDir>
+          <concordionIndexFile>com/amoralesch/vdp/spec/Spec.html</concordionIndexFile>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>report-integration</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

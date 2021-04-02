@@ -3,7 +3,7 @@
 > This specification applies to v. ${project.version} of the application.
 
 A very dumb project used to display what we can do using multiple tools
-together
+together.
 
 ## Application Programming Interface
 
