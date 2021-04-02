@@ -26,6 +26,7 @@
 
   <modules>
     <module>app</module>
+    <module>ui</module>
     <module>web</module>
   </modules>
 

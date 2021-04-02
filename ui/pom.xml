@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>vdp</artifactId>
+    <groupId>com.amoralesch.vdp</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>vdp-ui</artifactId>
+  <name>User Interface</name>
+  <description>
+    Very Dumb Project user interface, Angular-based.
+  </description>
+
+  <properties>
+    <node.directory>${project.build.directory}/node</node.directory>
+    <chromium.directory>${project.build.directory}/chromium</chromium.directory>
+    <uitools.version>1.0.0-SNAPSHOT</uitools.version>
+
+    <bin.classifier>linux</bin.classifier>
+    <bin.suffix />
+    <script.suffix />
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>install-node</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.yashkov.webtools</groupId>
+                  <artifactId>webtools-nodejs</artifactId>
+                  <version>${uitools.version}</version>
+                  <classifier>${bin.classifier}</classifier>
+                  <type>zip</type>
+                  <outputDirectory>${node.directory}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.yashkov.webtools</groupId>
+                  <artifactId>webtools-npm</artifactId>
+                  <version>${uitools.version}</version>
+                  <classifier>pkg</classifier>
+                  <type>zip</type>
+                  <outputDirectory>${node.directory}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.yashkov.webtools</groupId>
+                  <artifactId>webtools-chromium</artifactId>
+                  <version>${uitools.version}</version>
+                  <classifier>${bin.classifier}</classifier>
+                  <type>zip</type>
+                  <outputDirectory>${chromium.directory}</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.yashkov.webtools</groupId>
+                  <artifactId>webtools-chromedriver</artifactId>
+                  <version>${uitools.version}</version>
+                  <classifier>${bin.classifier}</classifier>
+                  <type>zip</type>
+                  <outputDirectory>${chromium.directory}</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <configuration>
+          <executable>${node.directory}/npm${script.suffix}</executable>
+        </configuration>
+        <executions>
+          <execution>
+            <id>install-ng</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>install --scripts-prepend-node-path=true</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>compile-ng</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>run build --scripts-prepend-node-path=true -- --prod</commandlineArgs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>test-ng</id>
+            <phase>test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <commandlineArgs>run test --scripts-prepend-node-path=true -- --karmaConfig=src/main/typescript/karma-ci.conf.js</commandlineArgs>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>node_modules</directory>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>windows</id>
+      <activation>
+        <os>
+          <family>windows</family>
+        </os>
+      </activation>
+      <properties>
+        <bin.classifier>windows</bin.classifier>
+        <bin.suffix>.exe</bin.suffix>
+        <script.suffix>.cmd</script.suffix>
+      </properties>
+    </profile>
+  </profiles>
+</project>
