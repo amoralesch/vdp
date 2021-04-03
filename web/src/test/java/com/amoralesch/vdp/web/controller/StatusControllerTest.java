@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class StatusControllerTest {
+class StatusControllerTest {
   private final StatusController controller = new StatusController();
 
   @Test
